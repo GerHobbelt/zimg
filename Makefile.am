@@ -150,7 +150,6 @@ libzimg_internal_la_SOURCES += \
 	src/zimg/depth/arm/depth_convert_arm.h \
 	src/zimg/depth/arm/dither_arm.cpp \
 	src/zimg/depth/arm/dither_arm.h \
-	src/zimg/depth/arm/f16c_arm.h \
 	src/zimg/resize/arm/resize_impl_arm.cpp \
 	src/zimg/resize/arm/resize_impl_arm.h
 
@@ -158,7 +157,6 @@ libneon_la_SOURCES = \
 	src/zimg/colorspace/arm/operation_impl_neon.cpp \
 	src/zimg/depth/arm/depth_convert_neon.cpp \
 	src/zimg/depth/arm/dither_neon.cpp \
-	src/zimg/depth/arm/f16c_neon.cpp \
 	src/zimg/resize/arm/resize_impl_neon.cpp
 
 libneon_la_CXXFLAGS = $(AM_CXXFLAGS) $(NEON_CFLAGS)
@@ -168,18 +166,15 @@ libzimg_internal_la_LIBADD += libneon.la
 endif # ARMSIMD
 
 if X86SIMD
-noinst_LTLIBRARIES += libsse.la libsse2.la libavx.la libf16c.la \
-	libavx512.la libavx512_vnni.la
+noinst_LTLIBRARIES += libavx2.la libavx512.la libavx512_vnni.la
 
 libzimg_internal_la_SOURCES += \
 	src/zimg/colorspace/x86/operation_impl_x86.cpp \
 	src/zimg/colorspace/x86/operation_impl_x86.h \
-	src/zimg/common/x86/avx_util.h \
 	src/zimg/common/x86/avx2_util.h \
 	src/zimg/common/x86/avx512_util.h \
 	src/zimg/common/x86/cpuinfo_x86.cpp \
 	src/zimg/common/x86/cpuinfo_x86.h \
-	src/zimg/common/x86/sse_util.h \
 	src/zimg/common/x86/sse2_util.h \
 	src/zimg/common/x86/x86util.cpp \
 	src/zimg/common/x86/x86util.h \
@@ -187,25 +182,18 @@ libzimg_internal_la_SOURCES += \
 	src/zimg/depth/x86/depth_convert_x86.h \
 	src/zimg/depth/x86/dither_x86.cpp \
 	src/zimg/depth/x86/dither_x86.h \
-	src/zimg/depth/x86/f16c_x86.h \
 	src/zimg/resize/x86/resize_impl_x86.cpp \
 	src/zimg/resize/x86/resize_impl_x86.h \
 	src/zimg/unresize/x86/unresize_impl_x86.cpp \
 	src/zimg/unresize/x86/unresize_impl_x86.h
-
-libsse2_la_SOURCES = \
-	src/zimg/unresize/x86/unresize_impl_sse.cpp
-
-libsse2_la_CXXFLAGS = $(AM_CXXFLAGS) -msse2
-libsse2_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/src/zimg $(graphengineflags)
 
 libavx2_la_SOURCES = \
 	src/zimg/colorspace/x86/operation_impl_avx2.cpp \
 	src/zimg/depth/x86/depth_convert_avx2.cpp \
 	src/zimg/depth/x86/dither_avx2.cpp \
 	src/zimg/depth/x86/error_diffusion_avx2.cpp \
-	src/zimg/depth/x86/f16c_avx2.cpp \
-	src/zimg/resize/x86/resize_impl_avx2.cpp
+	src/zimg/resize/x86/resize_impl_avx2.cpp \
+	src/zimg/unresize/x86/unresize_impl_avx2.cpp
 
 libavx2_la_CXXFLAGS = $(AM_CXXFLAGS) -mavx2 -mf16c -mfma $(HSW_CFLAGS)
 libavx2_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/src/zimg $(graphengineflags)
@@ -226,7 +214,7 @@ libavx512_vnni_la_SOURCES = src/zimg/resize/x86/resize_impl_avx512_vnni.cpp
 libavx512_vnni_la_CXXFLAGS = $(AM_CXXFLAGS) -mavx512f -mavx512cd -mavx512vl -mavx512bw -mavx512dq -mavx512vnni $(CLX_CFLAGS)
 libavx512_vnni_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/src/zimg $(graphengineflags)
 
-libzimg_internal_la_LIBADD += libsse2.la libavx2.la libavx512.la libavx512_vnni.la
+libzimg_internal_la_LIBADD += libavx2.la libavx512.la libavx512_vnni.la
 endif # X86SIMD
 
 
@@ -366,7 +354,6 @@ test_unit_test_SOURCES += \
 	test/colorspace/arm/colorspace_neon_test.cpp \
 	test/depth/arm/depth_convert_neon_test.cpp \
 	test/depth/arm/dither_neon_test.cpp \
-	test/depth/arm/f16c_neon_test.cpp \
 	test/resize/arm/resize_impl_neon_test.cpp
 endif # ARMSIMD
 
@@ -380,7 +367,6 @@ test_unit_test_SOURCES += \
 	test/depth/x86/dither_avx2_test.cpp \
 	test/depth/x86/dither_avx512_test.cpp \
 	test/depth/x86/error_diffusion_avx2_test.cpp \
-	test/depth/x86/f16c_avx2_test.cpp \
 	test/resize/x86/resize_impl_avx2_test.cpp \
 	test/resize/x86/resize_impl_avx512_test.cpp \
 	test/resize/x86/resize_impl_avx512_vnni_test.cpp
