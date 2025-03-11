@@ -46,7 +46,6 @@ void show_x86_info()
 	std::cout << "AVX-512 FP16:         " << yes_no(caps.avx512fp16) << '\n';
 	std::cout << "AVX-512 BF16:         " << yes_no(caps.avx512bf16) << '\n';
 	std::cout << "XOP:                  " << yes_no(caps.xop) << '\n';
-	std::cout << "Piledriver:           " << yes_no(caps.piledriver) << '\n';
 	std::cout << "Zen1:                 " << yes_no(caps.zen1) << '\n';
 	std::cout << "Zen2:                 " << yes_no(caps.zen2) << '\n';
 	std::cout << "Zen3:                 " << yes_no(caps.zen3) << '\n';
@@ -81,8 +80,6 @@ void show_arm_info()
 	const zimg::ARMCapabilities caps = zimg::query_arm_capabilities();
 
 	std::cout << "Supported instruction set extensions:\n";
-	std::cout << "NEON:  " << yes_no(caps.neon) << '\n';
-	std::cout << "VFPv4: " << yes_no(caps.vfpv4) << '\n';
 	std::cout << '\n';
 }
 #endif // ZIMG_ARM
