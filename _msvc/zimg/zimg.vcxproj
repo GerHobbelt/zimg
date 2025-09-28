@@ -383,14 +383,19 @@
       <EnableEnhancedInstructionSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AdvancedVectorExtensions512</EnableEnhancedInstructionSet>
       <EnableEnhancedInstructionSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AdvancedVectorExtensions512</EnableEnhancedInstructionSet>
       <EnableEnhancedInstructionSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AdvancedVectorExtensions512</EnableEnhancedInstructionSet>
-      <AdditionalOptions Condition="'$(Platform)'=='Win32' And $(PlatformToolset.Contains('ClangCL'))">/clang:-mavx512vnni</AdditionalOptions>
-      <AdditionalOptions Condition="'$(Platform)'=='x64' And $(PlatformToolset.Contains('ClangCL'))">/clang:-mavx512vnni</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Platform)'=='Win32' And $(PlatformToolset.Contains('ClangCL'))">/clang:-mavx512vnni %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Platform)'=='x64' And $(PlatformToolset.Contains('ClangCL'))">/clang:-mavx512vnni %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <ClCompile Include="..\..\src\zimg\resize\x86\resize_impl_x86.cpp" />
     <ClCompile Include="..\..\src\zimg\unresize\bilinear.cpp" />
     <ClCompile Include="..\..\src\zimg\unresize\unresize.cpp" />
     <ClCompile Include="..\..\src\zimg\unresize\unresize_impl.cpp" />
-    <ClCompile Include="..\..\src\zimg\unresize\x86\unresize_impl_avx2.cpp" />
+    <ClCompile Include="..\..\src\zimg\unresize\x86\unresize_impl_avx2.cpp">
+      <EnableEnhancedInstructionSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+    </ClCompile>
     <ClCompile Include="..\..\src\zimg\unresize\x86\unresize_impl_x86.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
